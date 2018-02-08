@@ -16,10 +16,10 @@ io.on('connection', function (socket) {
 });
 
 app.get("/", function (request, response) {
-  response.send('Hi. This is the root');
+  response.send('Hi. This is the root baby.');
 });
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+http.listen(3000, function() {
+  console.log('listening on 3000');
 });
