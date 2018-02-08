@@ -1,0 +1,25 @@
+{
+  "name": "chattt-backend",
+  "version": "0.0.1",
+  "description": "Chattt's backend server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "engines": {
+    "node": "9.x"
+  },
+  "repository": {
+    "url": "git+https://github.com/aviaryan/chattt-backend.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express",
+    "chattt"
+  ]
+}
