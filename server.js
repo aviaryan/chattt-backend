@@ -14,7 +14,9 @@ io.on('connection', function (socket) {
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
-    io.emit('/msg ' + conn.channel, {user: null, data: `${conn.user} has left the chat!`});
+    if (conn.channel){
+      io.emit('/msg ' + conn.channel, {user: null, data: `${conn.user} has left the chat!`});
+    }
   });
 
   // join channel
@@ -26,12 +28,21 @@ io.on('connection', function (socket) {
 
     if (channels.hasOwnProperty(ch)){
       // channel exists
+      // check if existing user
+      if (channels[ch]['users'].indexOf(user) > -1){
+        // fail user join request
+        socket.emit('/status', {type: 'join failed', data: 'User with that handle already exists!'});
+        conn.channel = null;
+        return;
+      }
       channels[ch]['population']++;
       channels[ch]['users'].push(user);
     } else {
       // need to create channel
       channels[ch] = {population: 1, users: [user]};
     }
+    // confirm user join
+    socket.emit('/status', {type: 'joined', data: null});
 
     // broadcast status message
     io.emit('/msg ' + ch, {user: null, data: `${msg.user} joined! Total members = ${channels[ch]['population']}`});
