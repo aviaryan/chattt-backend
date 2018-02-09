@@ -14,25 +14,27 @@ io.on('connection', function (socket) {
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
-    io.emit('/msg ' + conn.channel, {user: null, message: `${conn.user} has left the chat!`});
+    io.emit('/msg ' + conn.channel, {user: null, data: `${conn.user} has left the chat!`});
   });
 
   // join channel
   socket.on('/join', (msg) => {
     console.log(msg);
     let ch = msg.channel;
+    let user = msg.user;
     conn = {user: msg.user, channel: msg.channel};
 
     if (channels.hasOwnProperty(ch)){
       // channel exists
       channels[ch]['population']++;
+      channels[ch]['users'].push(user);
     } else {
       // need to create channel
-      channels[ch] = {population: 1};
+      channels[ch] = {population: 1, users: [user]};
     }
 
     // broadcast status message
-    io.emit('/msg ' + ch, {user: null, message: `${msg.user} joined! Total members = ${channels[ch]['population']}`});
+    io.emit('/msg ' + ch, {user: null, data: `${msg.user} joined! Total members = ${channels[ch]['population']}`});
 
     // setup message listener
     socket.on('/msg ' + ch, (msg) => {
