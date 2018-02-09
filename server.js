@@ -10,16 +10,18 @@ let channels = {};
 // magic
 io.on('connection', function (socket) {
   console.log('a user connected');
-  let userStatus = {};
+  let conn = {};
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
+    io.emit('/msg ' + conn.channel, {user: null, message: `${conn.user} has left the chat!`});
   });
 
   // join channel
   socket.on('/join', (msg) => {
     console.log(msg);
     let ch = msg.channel;
+    conn = {user: msg.user, channel: msg.channel};
 
     if (channels.hasOwnProperty(ch)){
       // channel exists
