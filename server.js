@@ -48,7 +48,7 @@ io.on('connection', function (socket) {
     socket.emit('/status', {type: 'joined', data: null});
 
     // broadcast status message
-    io.emit('/msg ' + ch, {user: null, data: `${user} joined #${ch}, channel population is ${channels[ch]['population']}.`});
+    io.emit('/msg ' + ch, {user: null, data: `${user} joined`});
 
     // setup message listener
     socket.on('/msg ' + ch, (msg) => {
