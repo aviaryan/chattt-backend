@@ -57,6 +57,12 @@ io.on('connection', function (socket) {
     });
   });
 
+  // get users list utility
+  socket.on('/users', (msg) => {
+    let ch = msg.channel;
+    socket.emit('/cb', {type: 'users', data: channels[ch].users});
+  });
+
 });
 
 app.get("/", function (request, response) {
