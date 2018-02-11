@@ -47,8 +47,10 @@ io.on('connection', function (socket) {
     // confirm user join
     socket.emit('/status', {type: 'joined', data: null});
 
-    // broadcast status message
+    // broadcast update message
     io.emit('/msg ' + ch, {user: null, data: `${user} joined`});
+    socket.broadcast.emit('/meta ' + ch, { type: 'join', data: user });
+    // ^^ send to everyone except the connection, it already gets it
 
     // setup message listener
     socket.on('/msg ' + ch, (msg) => {
