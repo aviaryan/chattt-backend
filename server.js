@@ -19,7 +19,8 @@ io.on('connection', function (socket) {
       channels[conn.channel].population--;
       channels[conn.channel].users.splice(channels[conn.channel]['users'].indexOf(conn.user), 1);
       // send bye bye message
-      io.emit('/msg ' + conn.channel, {user: null, data: `${conn.user} has left the chat!`});
+      io.emit('/msg ' + conn.channel, {user: null, data: `${conn.user} has left the chat`});
+      io.emit('/meta ' + conn.channel, {type: 'left', data: conn.user});
     }
   });
 
