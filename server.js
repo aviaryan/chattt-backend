@@ -25,7 +25,6 @@ io.on('connection', function (socket) {
 
   // join channel
   socket.on('/join', (msg) => {
-    console.log(msg);
     let ch = msg.channel;
     let user = msg.user;
     conn = {user: msg.user, channel: msg.channel};
@@ -49,7 +48,7 @@ io.on('connection', function (socket) {
     socket.emit('/status', {type: 'joined', data: null});
 
     // broadcast status message
-    io.emit('/msg ' + ch, {user: null, data: `${msg.user} joined, channel population is ${channels[ch]['population']}.`});
+    io.emit('/msg ' + ch, {user: null, data: `${user} joined #${ch}, channel population is ${channels[ch]['population']}.`});
 
     // setup message listener
     socket.on('/msg ' + ch, (msg) => {
