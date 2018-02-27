@@ -3,7 +3,7 @@
 ⚡️ Backend for [chattt](https://github.com/aviaryan/chattt).
 
 
-### Running
+## Running
 
 ```sh
 > git clone https://github.com/aviaryan/chattt-backend.git
@@ -16,7 +16,7 @@
 ```
 
 
-### Hosting it for free
+## Hosting it for free
 
 You can use [Glitch](https://glitch.com) to run this server for free.
 
