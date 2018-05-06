@@ -68,7 +68,7 @@ io.on('connection', function (socket) {
 });
 
 app.get("/", function (request, response) {
-  response.send('Hi. This is the root baby.');
+  response.send('<a href="https://github.com/aviaryan/chattt">LOST?</a>');
 });
 
 // listen for requests :)
