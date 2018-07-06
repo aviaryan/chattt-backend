@@ -28,6 +28,7 @@ io.on('connection', function (socket) {
   socket.on('/join', (msg) => {
     let ch = msg.channel;
     let user = msg.user;
+    let joinTime = msg.time;
     conn = {user: msg.user, channel: msg.channel};
 
     if (channels.hasOwnProperty(ch)){
@@ -49,7 +50,7 @@ io.on('connection', function (socket) {
     socket.emit('/status', {type: 'joined', data: null});
 
     // broadcast update message
-    io.emit('/msg ' + ch, {user: null, data: `${user} joined`});
+    io.emit('/msg ' + ch, {user: null, data: `${user} joined on ${joinTime}`});
     socket.broadcast.emit('/meta ' + ch, { type: 'join', data: user });
     // ^^ send to everyone except the connection, it already gets it
 
