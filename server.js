@@ -50,7 +50,7 @@ io.on('connection', function (socket) {
     socket.emit('/status', {type: 'joined', data: null});
 
     // broadcast update message
-    io.emit('/msg ' + ch, {user: null, data: `${user} joined on ${joinTime}`});
+    io.emit('/msg ' + ch, {user: null, data: `${user} joined at ${joinTime}`});
     socket.broadcast.emit('/meta ' + ch, { type: 'join', data: user });
     // ^^ send to everyone except the connection, it already gets it
 
