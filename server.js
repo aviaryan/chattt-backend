@@ -28,6 +28,14 @@ io.on('connection', function (socket) {
   socket.on('/join', (msg) => {
     let ch = msg.channel;
     let user = msg.user;
+    let d = new Date();
+    let timeZoneOffset = d.getTimezoneOffset()/60;
+    if (timeZoneOffset <= 0) {
+      timeZoneOffset = '+' + String(-timeZoneOffset);
+    } else {
+      timeZoneOffset = '-' + String(-timeZoneOffset);
+    }
+    let joinTime =  String(d.getHours()) + ':' + String(d.getMinutes()) + ' UTC' + timeZoneOffset;
     conn = {user: msg.user, channel: msg.channel};
 
     if (channels.hasOwnProperty(ch)){
@@ -49,7 +57,7 @@ io.on('connection', function (socket) {
     socket.emit('/status', {type: 'joined', data: null});
 
     // broadcast update message
-    io.emit('/msg ' + ch, {user: null, data: `${user} joined`});
+    io.emit('/msg ' + ch, {user: null, data: `${user} joined [${joinTime}]`});
     socket.broadcast.emit('/meta ' + ch, { type: 'join', data: user });
     // ^^ send to everyone except the connection, it already gets it
 
